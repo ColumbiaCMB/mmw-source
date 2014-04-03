@@ -2,6 +2,8 @@ import serial
 import time
 
 class lockinController():
+
+### Initialization ###
 	def __init__(self, serial_port='/dev/ttyUSB2', terminator='\r'):
 		self.address=serial_port
 		self.setup_rs232_output()
@@ -17,6 +19,8 @@ class lockinController():
 		finally:
 			ser.close()
 
+### Basic send and receive methods ###
+
 	def send(self,msg):
 		ser=serial.Serial(self.address)
 		try:
@@ -27,7 +31,7 @@ class lockinController():
 		finally:
 			ser.close()
 
-	def response(self,msg):
+	def send_and_receive(self,msg):
 		ser=serial.Serial(self.address,timeout=2)
 		try:
 			ser.write(msg+self.terminator)
@@ -42,6 +46,7 @@ class lockinController():
 		message=''
 		new_char=None
 		metatimeout=3.0
+		#while True:
 		while new_char!=self.terminator:
 			new_char=ser.read(1)
 			if new_char=='':
@@ -51,14 +56,13 @@ class lockinController():
 			message+=new_char
 		return message
 
+### Stub methods ###
 
-	def receive(self):
-		# This doesn't work. From my observations, it seems that a serial port cannot be closed between writing and reading.
-		ser=serial.Serial(self.address, timeout=1)
-		try:
-			print ser.read(50)
-		except Exception as e:
-			print e
-			raise e
-		finally:
-			ser.close()
+	def get_data(self):
+		return self.send_and_receive('SNAP? 1,2,3,4')
+
+	def get_idn(self):
+		return self.send_and_receive('*IDN?')
+
+	def get_x(self):
+		return self.send_and_receive('OUTP? 1')
