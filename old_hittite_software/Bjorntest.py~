@@ -1,0 +1,199 @@
+class Hittite:
+    def connect(self):
+        ''' Creates the socket object. Defines host and port used.'''
+        import socket
+        s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+        s.connect(('192.168.001.249',50000))
+        s.settimeout(0.5)
+        self.s = s
+        return
+    def disconnect(self):
+        self.s.close()
+    def ident(self):
+        self.connect()
+        response = ''
+        try:
+            self.s.send('*IDN?\r')
+            response = self.s.recv(10000)
+        except Exception,e:
+            print
+        self.disconnect()
+        return response
+    def reset(self):
+        self.connect()
+        response=''
+        try:
+            self.s.send('*RST\r')
+            response =self.s.recv(10000)
+        except Exception,e:
+            print
+        self.disconnect()
+        return response
+
+    def mode(self):
+        self.connect()
+        response=''
+        try:
+            self.s.send('INIT:CONT?\r')
+            response =self.s.recv(10000)
+        except Exception,e:
+            print
+        self.disconnect()
+        return response
+
+
+    def on(self):
+        self.connect()
+        response = ''
+        try:
+            self.s.send('OUTP ON\r')
+            response = self.s.recv(10000)
+        except Exception,e:
+            print
+        self.disconnect()
+        return response
+    def off(self):
+        self.connect()
+        response = ''
+        try:
+            self.s.send('OUTP OFF\r')
+            response = self.s.recv(10000)
+        except Exception,e:
+            print
+        self.disconnect()
+        return response
+    def check(self):
+        self.connect()
+        response = ''
+        try:
+            self.s.send('OUTP?\r')
+            response =self.s.recv(10000)
+        except Exception,e:
+            print
+        self.disconnect()
+        if response == '1\n':
+            onoff = 'On'
+        elif response == '0\n':
+            onoff = 'Off'
+        else:
+            onoff = 'Error'
+        return onoff
+    def set_freq(self,freq):
+        self.connect()
+        response = ''
+        try:
+            '''self.s.send('FREQ: '+freq+'\r') ORIGINAL COMMAND. The semicolon
+            was screwing it up.'''
+            self.s.send('FREQ '+freq+'\r')
+            self.s.send('FREQ?\r')
+            response = self.s.recv(10000)
+        except Exception,e:
+            print
+        self.disconnect()
+        return response
+    def set_power(self,power):
+        self.connect()
+        response = ''
+        try:
+            self.s.send('POW '+power+'\r')
+            self.s.send('POW?\r')
+            response =self.s.recv(10000)
+        except Exception,e:
+            print
+        self.disconnect()
+        return response
+    def set_all(self,freq,power):
+        self.connect()
+        response = ''
+        try:
+            self.s.send('FREQ:FIX '+freq+';POW '+power+'\r')
+            self.s.send('FREQ?;POW?\r')
+            response =self.s.recv(10000)
+        except Exception,e:
+            print
+        self.disconnect()
+        return response
+    
+    def oldsweep(self):
+# Now does exactly the same thing as newsweep!
+        self.connect()
+        response = ''
+        try:
+            self.s.send('freq:star 8e9; stop 12e9;step 1e7;mode swe\r')
+            #self.s.send('swe:dwel .1\r')
+            self.s.send('init:cont on\r')
+            self.s.send('init:cont off\r')
+            response=self.s.recv(10000)
+        except Exception,e:
+            print
+        self.disconnect()
+        return response
+
+    def newsweep(self):
+    # This successfully implements a sweep and won't be hard to customize to take user input parameters. However, it locks up the set freq setting. I think this is because it puts the freq in mode: sweep, which doesn't allow switching and won't exit. Note that the trigger is also modular.
+        self.connect()
+        response = ''
+        try:
+            self.s.send('freq:star 8e9; stop 12e9;step 1e7;mode swe\r')
+            self.s.send('trig: source bus\r')
+            self.s.send('init\r')
+            self.s.send('TRIG\r')
+            response=self.s.recv(10000) 
+        except Exception,e:
+            print
+        self.disconnect()
+        return response
+
+    def set(self,a):
+# This is a workaround for the inability to change the mode from sweep back to default. Sweeps always end at the end point, so sweeping over no space ends at the desired setpoint.
+        self.sweep(a,a)
+
+    def sweep(self,a,b):
+    # This should be taking inputs as the new parameters, but it doesn't work. It does however trigger the newsweep function if it has been primed. The trigger?
+        self.connect()
+        response = ''
+        try:
+            self.s.send('freq:star '+a+'; stop '+b+';step 1e7;mode swe\r')
+            self.s.send('trig: source bus\r')
+            self.s.send('init\r')
+            self.s.send('TRIG\r')
+            response=self.s.recv(10000) 
+        except Exception,e:
+            print
+        self.disconnect()
+        return response
+
+    def abort(self):
+        self.connect()
+        response = ''
+        try:
+            self.s.send('abort\r')
+            response=self.s.recv(10000) 
+        except Exception,e:
+            print
+        self.disconnect()
+        return response
+
+    '''def set_sweep(self,start,stop):
+        #Once set sweep is used, the set freq locks ups and sweep doesn't occur. Find out  why this might be.
+        self.connect()
+        response = ''
+        try:
+            self.s.send('FREQ:MODE SWE\r')
+            self.s.send('FREQ:STAR'+start+'\r')
+            self.s.send('FREQ:STOP'+stop+'\r')
+            response =self.s.recv(10000)
+        except Exception,e:
+            print
+        self.disconnect()
+        return response
+    def sweep(self):
+        self.connect()
+        response = ''
+        try:
+            self.s.send('TRIG\r')
+            response=self.s.recv(10000)
+        except Exception,e:
+            print
+        self.disconnect()
+        return response'''
