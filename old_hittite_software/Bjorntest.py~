@@ -3,7 +3,7 @@ class Hittite:
         ''' Creates the socket object. Defines host and port used.'''
         import socket
         s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-        s.connect(('192.168.001.249',50000))
+        s.connect(('192.168.000.070',50000))
         s.settimeout(0.5)
         self.s = s
         return
