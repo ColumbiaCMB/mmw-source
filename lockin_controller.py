@@ -4,7 +4,8 @@ import time
 class lockinController():
 ### Initialization ###
     def __init__(self, serial_port='/dev/ttyUSB2', terminator='\n'):
-	# test
+        # For linux, the serial port will be something like the default address.
+        # However, for windows it will be something like 'COM6'.
         self.address=serial_port
         self.terminator=terminator
         self.setup_rs232_output()
@@ -50,7 +51,7 @@ class lockinController():
     def read_until_terminator(self,ser):
         message=''
         new_char=None
-        while new_char!='\n':
+        while new_char!='\r':
             new_char=ser.read(1)
             if new_char=='':
                 # This means ser has timed out. We don't want an unending loop if the terminator has somehow been lost.
