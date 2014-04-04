@@ -4,6 +4,7 @@ import time
 class lockinController():
 ### Initialization ###
     def __init__(self, serial_port='/dev/ttyUSB2', terminator='\n'):
+	# test
         self.address=serial_port
         self.terminator=terminator
         self.setup_rs232_output()
