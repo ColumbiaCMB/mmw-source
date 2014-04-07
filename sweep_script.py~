@@ -4,43 +4,90 @@ import numpy as np
 import time
 import os
 
-l=lockin_controller.lockinController(serial_port='COM6')
-# For running this script on the windows laptop by the source.
-h=hittite_controller.hittiteController()
+class sweepController():
+    def __init__(self, serial_port='COM6'):
+        # For running this script on the windows laptop by the source.
+        self.l=lockin_controller.lockinController(serial_port=serial_port)
+        self.h=hittite_controller.hittiteController()
+        self.freq_list=[]
+        self.x_list=[]
+        self.y_list=[]
+        self.r_list=[]
+        self.theta_list=[]
+        self.x_std_list=[]
+        self.y_std_list=[]
+        self.r_std_list=[]
+        self.theta_std_list=[]
+        
+    def perform_sweep(self,start=10e9,stop=14.05e9,step=0.05e9)
+        self.h.on()
+        try:
+            time.sleep(0.1)
+            for freq in np.arange(start,stop,step):
+                self.freq_list.append(freq)
+                self.h.set_freq(float(freq))
+                time.sleep(20)
+                self.collect_data()
+            self.save()
+        except Exception as e:
+            raise e
+        finally:
+            self.h.off()
+            
+    def collect_data(self):
+        x_point=[]
+        y_point=[]
+        r_points=[]
+        theta_points=[]
+        for i in range(100):
+            data_string=self.l.get_data()
+            data_string=data_string.strip('\r')
+            data_list=data_string.split(',')
+            x_points.append(float(data_list[0]))
+            y_points.append(float(data_list[1]))
+            r_points.append(float(data_list[2]))
+            theta_points.append(float(data_list[3]))
+            time.sleep(0.1)
+        x=np.mean(x_points)
+        y=np.mean(y_points)
+        r=np.mean(r_points)
+        theta=np.mean(theta_points)
+        x_std=np.std(x_points)
+        y_std=np.std(y_points)
+        r_std=np.std(r_points)
+        theta_std=np.std(theta_points)
+    
+        self.x_list.append(x)
+        self.x_std_list.append(x_std)
+        self.y_list.append(y)
+        self.y_std_list.append(y_std)
+        self.r_list.append(r)
+        self.r_std_list.append(r_std)
+        self.theta_list.append(theta)
+        self.theta_std_list.append(theta_std)
 
-start=10e9
-stop=14.05e9
-step=0.05e9
-
-freq_list=[]
-x_list=[]
-y_list=[]
-r_list=[]
-theta_list=[]
-
-h.on()
-time.sleep(0.1)
-for freq in np.arange(start,stop,step):
-    freq_list.append(freq)
-    h.set_freq(float(freq))
-    time.sleep(20)
-    data_string=l.get_data()
-    data_string=data_string.strip('\r')
-    data_list=data_string.split(',')
-    x_list.append(float(data_list[0]))
-    y_list.append(float(data_list[1]))
-    r_list.append(float(data_list[2]))
-    theta_list.append(float(data_list[3]))
-h.off()
-
-fn=time.strftime('%Y-%m-%d_%H-%M-%S')
-base_dir='C:\Users\lab computer\Documents\data\mmwave_source_sweeps'
-fn = os.path.join(base_dir,fn)
-fn+='.npz'
-np.savez(fn, freq=freq_list, x=x_list, y=y_list, r=r_list, theta=theta_list)
-
-print freq_list
-print x_list
-print y_list
-print r_list
-print theta_list
+    def save(self):
+        fn=time.strftime('%Y-%m-%d_%H-%M-%S')
+        base_dir='C:\Users\lab computer\Documents\data\mmwave_source_sweeps'
+        fn = os.path.join(base_dir,fn)
+        fn+='.npz'
+        np.savez(fn, freq=self.freq_list, x=self.x_list, x_std=self.x_std_list, y=self.y_list, y_std=self.y_std_list,
+                    r=self.r_list, r_std=self.r_std_list, theta=self.theta_list, theta_std=self.theta_std_list)
+                    
+    def reset(self):
+        self.freq_list=[]
+        self.x_list=[]
+        self.y_list=[]
+        self.r_list=[]
+        self.theta_list=[]
+        self.x_std_list=[]
+        self.y_std_list=[]
+        self.r_std_list=[]
+        self.theta_std_list=[]
+                    
+def main():
+    sweep=sweepController()
+    sweep.perform_sweep()
+    
+if __name__=='__main__':
+    main()
