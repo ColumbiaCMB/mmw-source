@@ -7,12 +7,13 @@ class lockinController():
         # For linux, the serial port will be something like the default address.
         # However, for windows it will be something like 'COM6'.
         self.address=serial_port
+        self.baudrate=19200
         self.terminator=terminator
         self.setup_rs232_output()
         
     
     def setup_rs232_output(self):
-        ser=serial.Serial(self.address)
+        ser=serial.Serial(self.address, baudrate=self.baudrate)
         try:
             ser.write('OUTX 0'+self.terminator)
         except Exception as e:
@@ -24,7 +25,7 @@ class lockinController():
 ### Basic send and receive methods ###
 
     def send(self,msg):
-        ser=serial.Serial(self.address)
+        ser=serial.Serial(self.address, baudrate=self.baudrate)
         time.sleep(.1)
         try:
             ser.write(msg+self.terminator)
@@ -35,7 +36,7 @@ class lockinController():
             ser.close()
 
     def send_and_receive(self,msg):
-        ser=serial.Serial(self.address,timeout=2)
+        ser=serial.Serial(self.address, baudrate=self.baudrate, timeout=2)
         time.sleep(.1)
         # This delay is necessary... for some reason. The system behaves very poorly otherwise.
         # Perhaps the serial port takes some time to initialize?
