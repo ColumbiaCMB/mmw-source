@@ -19,7 +19,7 @@ class sweepController():
         self.r_std_list=[]
         self.theta_std_list=[]
         
-    def perform_sweep(self,start=10e9,stop=14.05e9,step=0.05e9)
+    def perform_sweep(self,start=10e9,stop=14.05e9,step=0.05e9):
         self.h.on()
         try:
             time.sleep(0.1)
@@ -35,8 +35,8 @@ class sweepController():
             self.h.off()
             
     def collect_data(self):
-        x_point=[]
-        y_point=[]
+        x_points=[]
+        y_points=[]
         r_points=[]
         theta_points=[]
         for i in range(100):
