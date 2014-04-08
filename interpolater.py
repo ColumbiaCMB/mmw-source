@@ -3,7 +3,7 @@ from scipy import interpolate
 
 
 
-# From the ZBD manufacturer's spec sheet. We interpolate to fit points not on even factors of 1 GHz.
+
 
 class interpolater():
     def __init__(self):
@@ -27,11 +27,17 @@ class interpolater():
             2772.08
         ]
         
+        # The responsivity gives us the volts/watt for the give frequencies in frequency. We use our interpolating function to fit a responsivity to points which aren't multiples of 1 GHz.
+        # The original responsivity values we are interpolating from we given in the ZBD manufacturer's spec sheet.
+        
         self.interpolating_function=interpolate.splrep(frequency,responsivity,s=0)
         
     def convert(self,freq_list,volt_list):
-        first_harmonic_factor=2.0/1.273
+        first_harmonic_factor=np.pi/2.0
+        # The first harmonic of a square wave with frequency f and amplitude of 1 is 2/pi sin(2pift).
         rms_factor=np.sqrt(2)
+        # The lockin amplifier measures the rms voltage of the 1st harmonic.
+        # We need to multiply back in the rms factor.
         for i in range(len(volt_list)):
             # Converts lock-in amplifier voltage to real voltage by multiplying in the 1st harmonic proportionality and the rms factor.
             volt_list[i]=volt_list[i]*first_harmonic_factor*rms_factor
@@ -39,6 +45,7 @@ class interpolater():
         # Interpolates what the multiplier should be for the voltage to power.
         pow_list=[0]*len(volt_list)
         for i in range(len(volt_list)):
+            # Multiplies each voltage by its associated multiplier, giving a list of powers for the given frequencies.
             pow_list[i]=volt_list[i]/pow_multiplier[i]
         return pow_list
 
