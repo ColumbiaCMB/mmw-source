@@ -19,14 +19,14 @@ class sweepController():
         self.r_std_list=[]
         self.theta_std_list=[]
         
-    def perform_sweep(self,start=10e9,stop=14.05e9,step=0.05e9):
+    def perform_sweep(self,start=10e9,stop=14.005e9,step=0.005e9):
         self.h.on()
         try:
             time.sleep(0.1)
             for freq in np.arange(start,stop,step):
                 self.freq_list.append(freq)
                 self.h.set_freq(float(freq))
-                time.sleep(20)
+                time.sleep(.2)
                 self.collect_data()
             self.save()
         except Exception as e:
@@ -39,7 +39,7 @@ class sweepController():
         y_points=[]
         r_points=[]
         theta_points=[]
-        for i in range(100):
+        for i in range(10):
             data_string=self.l.get_data()
             data_string=data_string.strip('\r')
             data_list=data_string.split(',')
@@ -47,7 +47,7 @@ class sweepController():
             y_points.append(float(data_list[1]))
             r_points.append(float(data_list[2]))
             theta_points.append(float(data_list[3]))
-            time.sleep(0.1)
+            time.sleep(0.01)
         x=np.mean(x_points)
         y=np.mean(y_points)
         r=np.mean(r_points)
