@@ -21,4 +21,7 @@ pyplot.subplot(1,1,1)
 for i in range(len(data_files)):
     pyplot.plot(freq_list[i],pow_list[i])
 pyplot.yscale('log')
+pyplot.xlabel('Frequency')
+pyplot.ylabel('Power (W)')
+
 pyplot.show()
