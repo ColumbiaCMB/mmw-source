@@ -3,8 +3,8 @@ import matplotlib.pyplot as pyplot
 import interpolater
 
 data_files=  [
-            'high_res_0_turns.npz','high_res_3_turns_minnie.npz','high_res_7_turns_minnie.npz',
-            'high_res_7_turns_both.npz','high_res_8_turns_both.npz','high_res_11_turns_both.npz'
+            '2014-04-10_0_turns_both.npz','2014-04-10_4_turns_both.npz','2014-04-10_6_turns_both.npz',
+            '2014-04-10_8_turns_both.npz','2014-04-10_10_turns_both.npz'
             ]
 
 interp=interpolater.interpolater()
