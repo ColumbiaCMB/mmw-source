@@ -3,9 +3,7 @@ from scipy import interpolate
 import matplotlib.pyplot as plt
 
 class attenuationConverter():
-    def __init__(self):
-        prefix='data_for_processing/'
-        datafile='2014-04-11_broadband-attenuator-response.npz'
+    def __init__(self,prefix='data_for_processing/',datafile='2014-04-11_broadband-attenuator-response.npz'):
         self.data=np.load(prefix+datafile)
         self.output_to_db()
         

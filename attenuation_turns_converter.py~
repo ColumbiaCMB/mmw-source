@@ -3,9 +3,7 @@ from scipy import interpolate
 import matplotlib.pyplot as plt
 
 class attenuationConverter():
-    def __init__(self):
-        prefix='data_for_processing/'
-        datafile='2014-04-11_broadband-attenuator-response.npz'
+    def __init__(self,prefix='data_for_processing/',datafile='2014-04-11_broadband-attenuator-response.npz'):
         self.data=np.load(prefix+datafile)
         self.output_to_db()
         
@@ -32,7 +30,7 @@ class attenuationConverter():
         return freduced.roots()
         
     def give_watts(self, data_list):
-        volt_list=self.data_list
+        volt_list=data_list
         first_harmonic_factor=np.pi/2.0
         rms_factor=np.sqrt(2)
         for i in range(len(volt_list)):
