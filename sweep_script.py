@@ -19,7 +19,7 @@ class sweepController():
         self.r_std_list=[]
         self.theta_std_list=[]
         
-    def perform_sweep(self,start=10e9,stop=14.005e9,step=0.005e9):
+    def perform_sweep(self,start=1e9,stop=20.005e9,step=0.1e9):
         self.h.on()
         try:
             time.sleep(0.1)
