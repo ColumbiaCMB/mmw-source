@@ -26,7 +26,7 @@ class driftController():
             time.sleep(0.1)
             self.collect_data()
             now = time.time()
-            self.time_list.append(now)
+            self.time_list.append(now-start)
         self.save()
             
     def collect_data(self):
