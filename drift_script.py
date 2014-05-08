@@ -18,21 +18,16 @@ class driftController():
         
         self.time_list=[]
         
-    def perform_drift(self):
-        self.h.on()
-        try:
+    def perform_drift(self, length_of_drift):
+        time.sleep(0.1)
+        start = time.time()
+        now = time.time()
+        while now-start < length_of_drift:
             time.sleep(0.1)
-            start = time.time()
-            while start-now < 30:
-                time.sleep(0.1)
-                self.collect_data()
-                now = time.time()
-                self.time_list.append(now)
-            self.save()
-        except Exception as e:
-            raise e
-        finally:
-            self.h.off()
+            self.collect_data()
+            now = time.time()
+            self.time_list.append(now)
+        self.save()
             
     def collect_data(self):
         x_points=[]
