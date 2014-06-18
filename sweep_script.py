@@ -19,7 +19,8 @@ class sweepController():
         self.r_std_list=[]
         self.theta_std_list=[]
         
-    def perform_sweep(self,start=1e9,stop=20.005e9,step=0.1e9):
+    def perform_sweep(self,start=9e9,stop=15.1e9,step=0.1e9):
+        sweep_start = time.time()
         self.h.on()
         try:
             time.sleep(0.1)
@@ -32,6 +33,8 @@ class sweepController():
         except Exception as e:
             raise e
         finally:
+            sweep_stop = time.time()
+            print 'Sweep took %f seconds' % (sweep_stop - sweep_start)
             self.h.off()
             
     def collect_data(self):
