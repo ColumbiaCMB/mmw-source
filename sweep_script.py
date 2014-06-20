@@ -19,7 +19,7 @@ class sweepController():
         self.r_std_list=[]
         self.theta_std_list=[]
         
-    def perform_sweep(self,start=9e9,stop=15.1e9,step=0.1e9):
+    def perform_sweep(self,start=11.6666666666e9, stop=13.4e9, step=0.0083333333333e9):
         sweep_start = time.time()
         self.h.on()
         try:
@@ -37,7 +37,7 @@ class sweepController():
             print 'Sweep took %f seconds' % (sweep_stop - sweep_start)
             self.h.off()
             
-    def collect_data(self):
+    def collect_data_with_averaging(self):
         x_points=[]
         y_points=[]
         r_points=[]
@@ -68,6 +68,21 @@ class sweepController():
         self.r_std_list.append(r_std)
         self.theta_list.append(theta)
         self.theta_std_list.append(theta_std)
+        
+    def collect_data(self):
+        # Collects one point at each freq step rather than 10.
+        # Doesn't average or find std.
+        data_string=self.l.get_data()
+        data_string=data_string.strip('\r')
+        data_list=data_string.split(',')
+        x = float(data_list[0])
+        y = float(data_list[1])
+        r = float(data_list[2])
+        theta = float(data_list[3])
+        self.x_list.append(x)
+        self.y_list.append(y)
+        self.r_list.append(r)
+        self.theta_list.append(theta)
 
     def save(self):
         fn=time.strftime('%Y-%m-%d_%H-%M-%S')
