@@ -37,6 +37,12 @@ class sweepController():
             print 'Sweep took %f seconds' % (sweep_stop - sweep_start)
             self.h.off()
             
+    def sweep_n_times(self, n):
+        for i in range(n):
+            self.perform_sweep()
+            self.reset()
+            time.sleep(60)
+            
     def collect_data_with_averaging(self):
         x_points=[]
         y_points=[]
