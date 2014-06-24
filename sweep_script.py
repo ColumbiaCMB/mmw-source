@@ -19,7 +19,7 @@ class sweepController():
         self.r_std_list=[]
         self.theta_std_list=[]
         
-    def perform_sweep(self,start=11.6666666666e9, stop=13.4e9, step=0.0083333333333e9):
+    def perform_sweep(self,start=11.6666666666e9, stop=13.4e9, step=0.00083333333333e9):
         sweep_start = time.time()
         self.h.on()
         try:
