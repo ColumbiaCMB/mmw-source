@@ -21,6 +21,8 @@ class sweepController():
         
     def perform_sweep(self,start=11.6666666666e9, stop=13.4e9, step=0.00083333333333e9):
         sweep_start = time.time()
+        self.reset()
+        print len(self.x_list)
         self.h.on()
         try:
             time.sleep(0.1)
@@ -109,9 +111,8 @@ class sweepController():
         self.r_std_list=[]
         self.theta_std_list=[]
                     
-def main():
-    sweep=sweepController()
-    sweep.perform_sweep()
     
 if __name__=='__main__':
-    main()
+    sweep=sweepController()
+    sweep.reset()
+    sweep.perform_sweep()
