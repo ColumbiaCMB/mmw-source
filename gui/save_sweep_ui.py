@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'save_sweep.ui'
+# Form implementation generated from reading ui file 'readout/mmw_source/gui/save_sweep.ui'
 #
-# Created: Tue Aug 26 09:52:08 2014
-#      by: PyQt4 UI code generator 4.9.6
+# Created: Fri Aug 29 12:37:40 2014
+#      by: PyQt4 UI code generator 4.9.3
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -12,16 +12,7 @@ from PyQt4 import QtCore, QtGui
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
-    def _fromUtf8(s):
-        return s
-
-try:
-    _encoding = QtGui.QApplication.UnicodeUTF8
-    def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig, _encoding)
-except AttributeError:
-    def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig)
+    _fromUtf8 = lambda s: s
 
 class Ui_SaveSweepPrompt(object):
     def setupUi(self, SaveSweepPrompt):
@@ -37,7 +28,7 @@ class Ui_SaveSweepPrompt(object):
         self.verticalLayout.addWidget(self.text_edit_comment)
         self.buttonBox = QtGui.QDialogButtonBox(SaveSweepPrompt)
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
-        self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Discard|QtGui.QDialogButtonBox.Save)
+        self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Cancel|QtGui.QDialogButtonBox.Save)
         self.buttonBox.setObjectName(_fromUtf8("buttonBox"))
         self.verticalLayout.addWidget(self.buttonBox)
 
@@ -47,8 +38,8 @@ class Ui_SaveSweepPrompt(object):
         QtCore.QMetaObject.connectSlotsByName(SaveSweepPrompt)
 
     def retranslateUi(self, SaveSweepPrompt):
-        SaveSweepPrompt.setWindowTitle(_translate("SaveSweepPrompt", "Save sweep", None))
-        self.label.setText(_translate("SaveSweepPrompt", "Enter comment text to save with data file:", None))
+        SaveSweepPrompt.setWindowTitle(QtGui.QApplication.translate("SaveSweepPrompt", "Save sweep", None, QtGui.QApplication.UnicodeUTF8))
+        self.label.setText(QtGui.QApplication.translate("SaveSweepPrompt", "Enter comment text to save with data file:", None, QtGui.QApplication.UnicodeUTF8))
 
 
 if __name__ == "__main__":

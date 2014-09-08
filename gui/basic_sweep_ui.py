@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'gui/basic_sweep.ui'
+# Form implementation generated from reading ui file 'readout/mmw_source/gui/basic_sweep.ui'
 #
-# Created: Thu Aug 28 15:36:50 2014
-#      by: PyQt4 UI code generator 4.9.6
+# Created: Mon Sep  8 14:54:09 2014
+#      by: PyQt4 UI code generator 4.9.3
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -12,21 +12,12 @@ from PyQt4 import QtCore, QtGui
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
-    def _fromUtf8(s):
-        return s
-
-try:
-    _encoding = QtGui.QApplication.UnicodeUTF8
-    def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig, _encoding)
-except AttributeError:
-    def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig)
+    _fromUtf8 = lambda s: s
 
 class Ui_SweepDialog(object):
     def setupUi(self, SweepDialog):
         SweepDialog.setObjectName(_fromUtf8("SweepDialog"))
-        SweepDialog.resize(1020, 830)
+        SweepDialog.resize(1020, 853)
         self.horizontalLayout_17 = QtGui.QHBoxLayout(SweepDialog)
         self.horizontalLayout_17.setObjectName(_fromUtf8("horizontalLayout_17"))
         self.plot_group_box = QtGui.QGroupBox(SweepDialog)
@@ -124,6 +115,15 @@ class Ui_SweepDialog(object):
         self.label_coarse_info = QtGui.QLabel(self.groupBox)
         self.label_coarse_info.setObjectName(_fromUtf8("label_coarse_info"))
         self.verticalLayout_2.addWidget(self.label_coarse_info)
+        self.push_save = QtGui.QPushButton(self.groupBox)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.push_save.sizePolicy().hasHeightForWidth())
+        self.push_save.setSizePolicy(sizePolicy)
+        self.push_save.setAutoDefault(False)
+        self.push_save.setObjectName(_fromUtf8("push_save"))
+        self.verticalLayout_2.addWidget(self.push_save)
         self.horizontalLayout_5.addLayout(self.verticalLayout_2)
         self.horizontalLayout_6.addLayout(self.horizontalLayout_5)
         self.verticalLayout_3.addWidget(self.groupBox)
@@ -266,15 +266,6 @@ class Ui_SweepDialog(object):
         self.verticalLayout_4.addLayout(self.horizontalLayout_16)
         self.horizontalLayout_4 = QtGui.QHBoxLayout()
         self.horizontalLayout_4.setObjectName(_fromUtf8("horizontalLayout_4"))
-        self.push_save = QtGui.QPushButton(SweepDialog)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.push_save.sizePolicy().hasHeightForWidth())
-        self.push_save.setSizePolicy(sizePolicy)
-        self.push_save.setAutoDefault(False)
-        self.push_save.setObjectName(_fromUtf8("push_save"))
-        self.horizontalLayout_4.addWidget(self.push_save)
         self.line_filename = QtGui.QLineEdit(SweepDialog)
         self.line_filename.setReadOnly(True)
         self.line_filename.setObjectName(_fromUtf8("line_filename"))
@@ -287,44 +278,44 @@ class Ui_SweepDialog(object):
         QtCore.QMetaObject.connectSlotsByName(SweepDialog)
 
     def retranslateUi(self, SweepDialog):
-        SweepDialog.setWindowTitle(_translate("SweepDialog", "mm-wave source sweeper", None))
-        self.groupBox.setTitle(_translate("SweepDialog", "Coarse Sweep", None))
-        self.label.setText(_translate("SweepDialog", "Start:", None))
-        self.spin_start_freq.setSuffix(_translate("SweepDialog", " GHz", None))
-        self.label_2.setText(_translate("SweepDialog", "Stop:", None))
-        self.spin_stop_freq.setSuffix(_translate("SweepDialog", " GHz", None))
-        self.label_3.setText(_translate("SweepDialog", "Step:", None))
-        self.combo_step_size.setItemText(0, _translate("SweepDialog", "10 MHz", None))
-        self.combo_step_size.setItemText(1, _translate("SweepDialog", "25 MHz", None))
-        self.combo_step_size.setItemText(2, _translate("SweepDialog", "50 MHz", None))
-        self.combo_step_size.setItemText(3, _translate("SweepDialog", "100 MHz", None))
-        self.combo_step_size.setItemText(4, _translate("SweepDialog", "250 MHz", None))
-        self.combo_step_size.setItemText(5, _translate("SweepDialog", "500 MHz", None))
-        self.combo_step_size.setItemText(6, _translate("SweepDialog", "1000 MHz", None))
-        self.label_5.setText(_translate("SweepDialog", "Repeat sweep # times:", None))
-        self.push_start_sweep.setText(_translate("SweepDialog", "Start Sweep", None))
-        self.push_abort.setText(_translate("SweepDialog", "Abort Sweep", None))
-        self.label_coarse_info.setText(_translate("SweepDialog", "Spacing:", None))
-        self.groupBox_2.setTitle(_translate("SweepDialog", "Fine Sweep", None))
-        self.label_4.setText(_translate("SweepDialog", "Span (Hz):", None))
-        self.line_span_hz.setText(_translate("SweepDialog", "20000", None))
-        self.label_6.setText(_translate("SweepDialog", "Points:", None))
-        self.line_npoints.setText(_translate("SweepDialog", "20", None))
-        self.label_spacing.setText(_translate("SweepDialog", "Spacing:", None))
-        self.push_start_fine_sweep.setText(_translate("SweepDialog", "Start Fine Sweep", None))
-        self.check_use_cal.setText(_translate("SweepDialog", "Use Calibration", None))
-        self.progress_sweep.setFormat(_translate("SweepDialog", "Sweep Progress: %p%", None))
-        self.label_7.setText(_translate("SweepDialog", "Power level:", None))
-        self.spin_dbm_per_tone.setSuffix(_translate("SweepDialog", " dBm/tone", None))
-        self.label_8.setText(_translate("SweepDialog", "DAC Gain (dB):", None))
-        self.label_10.setText(_translate("SweepDialog", "DAC Atten (dB):", None))
-        self.label_9.setText(_translate("SweepDialog", "ADC Gain (dB):", None))
-        self.label_status.setText(_translate("SweepDialog", "status", None))
-        self.push_add_resonator.setText(_translate("SweepDialog", "Add Selected", None))
-        self.push_clear_all.setText(_translate("SweepDialog", "Clear All", None))
-        self.push_save_res.setText(_translate("SweepDialog", "Save...", None))
-        self.push_load_res.setText(_translate("SweepDialog", "Load...", None))
-        self.push_save.setText(_translate("SweepDialog", "Start Logging", None))
+        SweepDialog.setWindowTitle(QtGui.QApplication.translate("SweepDialog", "mm-wave source sweeper", None, QtGui.QApplication.UnicodeUTF8))
+        self.groupBox.setTitle(QtGui.QApplication.translate("SweepDialog", "Coarse Sweep", None, QtGui.QApplication.UnicodeUTF8))
+        self.label.setText(QtGui.QApplication.translate("SweepDialog", "Start:", None, QtGui.QApplication.UnicodeUTF8))
+        self.spin_start_freq.setSuffix(QtGui.QApplication.translate("SweepDialog", " GHz", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_2.setText(QtGui.QApplication.translate("SweepDialog", "Stop:", None, QtGui.QApplication.UnicodeUTF8))
+        self.spin_stop_freq.setSuffix(QtGui.QApplication.translate("SweepDialog", " GHz", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_3.setText(QtGui.QApplication.translate("SweepDialog", "Step:", None, QtGui.QApplication.UnicodeUTF8))
+        self.combo_step_size.setItemText(0, QtGui.QApplication.translate("SweepDialog", "10 MHz", None, QtGui.QApplication.UnicodeUTF8))
+        self.combo_step_size.setItemText(1, QtGui.QApplication.translate("SweepDialog", "25 MHz", None, QtGui.QApplication.UnicodeUTF8))
+        self.combo_step_size.setItemText(2, QtGui.QApplication.translate("SweepDialog", "50 MHz", None, QtGui.QApplication.UnicodeUTF8))
+        self.combo_step_size.setItemText(3, QtGui.QApplication.translate("SweepDialog", "100 MHz", None, QtGui.QApplication.UnicodeUTF8))
+        self.combo_step_size.setItemText(4, QtGui.QApplication.translate("SweepDialog", "250 MHz", None, QtGui.QApplication.UnicodeUTF8))
+        self.combo_step_size.setItemText(5, QtGui.QApplication.translate("SweepDialog", "500 MHz", None, QtGui.QApplication.UnicodeUTF8))
+        self.combo_step_size.setItemText(6, QtGui.QApplication.translate("SweepDialog", "1000 MHz", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_5.setText(QtGui.QApplication.translate("SweepDialog", "Repeat sweep # times:", None, QtGui.QApplication.UnicodeUTF8))
+        self.push_start_sweep.setText(QtGui.QApplication.translate("SweepDialog", "Start Sweep", None, QtGui.QApplication.UnicodeUTF8))
+        self.push_abort.setText(QtGui.QApplication.translate("SweepDialog", "Abort Sweep", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_coarse_info.setText(QtGui.QApplication.translate("SweepDialog", "Spacing:", None, QtGui.QApplication.UnicodeUTF8))
+        self.push_save.setText(QtGui.QApplication.translate("SweepDialog", "Save sweep", None, QtGui.QApplication.UnicodeUTF8))
+        self.groupBox_2.setTitle(QtGui.QApplication.translate("SweepDialog", "Fine Sweep", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_4.setText(QtGui.QApplication.translate("SweepDialog", "Span (Hz):", None, QtGui.QApplication.UnicodeUTF8))
+        self.line_span_hz.setText(QtGui.QApplication.translate("SweepDialog", "20000", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_6.setText(QtGui.QApplication.translate("SweepDialog", "Points:", None, QtGui.QApplication.UnicodeUTF8))
+        self.line_npoints.setText(QtGui.QApplication.translate("SweepDialog", "20", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_spacing.setText(QtGui.QApplication.translate("SweepDialog", "Spacing:", None, QtGui.QApplication.UnicodeUTF8))
+        self.push_start_fine_sweep.setText(QtGui.QApplication.translate("SweepDialog", "Start Fine Sweep", None, QtGui.QApplication.UnicodeUTF8))
+        self.check_use_cal.setText(QtGui.QApplication.translate("SweepDialog", "Use Calibration", None, QtGui.QApplication.UnicodeUTF8))
+        self.progress_sweep.setFormat(QtGui.QApplication.translate("SweepDialog", "Sweep Progress: %p%", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_7.setText(QtGui.QApplication.translate("SweepDialog", "Power level:", None, QtGui.QApplication.UnicodeUTF8))
+        self.spin_dbm_per_tone.setSuffix(QtGui.QApplication.translate("SweepDialog", " dBm/tone", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_8.setText(QtGui.QApplication.translate("SweepDialog", "DAC Gain (dB):", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_10.setText(QtGui.QApplication.translate("SweepDialog", "DAC Atten (dB):", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_9.setText(QtGui.QApplication.translate("SweepDialog", "ADC Gain (dB):", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_status.setText(QtGui.QApplication.translate("SweepDialog", "status", None, QtGui.QApplication.UnicodeUTF8))
+        self.push_add_resonator.setText(QtGui.QApplication.translate("SweepDialog", "Add Selected", None, QtGui.QApplication.UnicodeUTF8))
+        self.push_clear_all.setText(QtGui.QApplication.translate("SweepDialog", "Clear All", None, QtGui.QApplication.UnicodeUTF8))
+        self.push_save_res.setText(QtGui.QApplication.translate("SweepDialog", "Save...", None, QtGui.QApplication.UnicodeUTF8))
+        self.push_load_res.setText(QtGui.QApplication.translate("SweepDialog", "Load...", None, QtGui.QApplication.UnicodeUTF8))
 
 
 if __name__ == "__main__":
