@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'basic_sweep.ui'
+# Form implementation generated from reading ui file 'gui/basic_sweep.ui'
 #
-# Created: Tue Aug 26 09:52:46 2014
+# Created: Thu Aug 28 15:36:50 2014
 #      by: PyQt4 UI code generator 4.9.6
 #
 # WARNING! All changes made in this file will be lost!
@@ -300,7 +300,7 @@ class Ui_SweepDialog(object):
         self.combo_step_size.setItemText(3, _translate("SweepDialog", "100 MHz", None))
         self.combo_step_size.setItemText(4, _translate("SweepDialog", "250 MHz", None))
         self.combo_step_size.setItemText(5, _translate("SweepDialog", "500 MHz", None))
-        self.combo_step_size.setItemText(6, _translate("SweepDialog", "1.00 GHz", None))
+        self.combo_step_size.setItemText(6, _translate("SweepDialog", "1000 MHz", None))
         self.label_5.setText(_translate("SweepDialog", "Repeat sweep # times:", None))
         self.push_start_sweep.setText(_translate("SweepDialog", "Start Sweep", None))
         self.push_abort.setText(_translate("SweepDialog", "Abort Sweep", None))

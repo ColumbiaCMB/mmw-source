@@ -4,58 +4,66 @@ import time
 class lockinController():
 ### Initialization ###
     def __init__(self, serial_port='/dev/ttyUSB2', terminator='\n'):
-        # For linux, the serial port will be something like the default address.
+        # For linux, theself.serial port will be something like the default address.
         # However, for windows it will be something like 'COM6'.
         self.address=serial_port
         self.baudrate=19200
         self.terminator=terminator
+        self.ser=serial.Serial(self.address, baudrate=self.baudrate,timeout=1,rtscts=True)
+        #self.ser.close()
         self.setup_rs232_output()
         
     
     def setup_rs232_output(self):
-        ser=serial.Serial(self.address, baudrate=self.baudrate)
+        #ser=serial.Serial(self.address, baudrate=self.baudrate)
+        #self.ser.open()
         try:
-            ser.write('OUTX 0'+self.terminator)
+           self.ser.write('OUTX 0'+self.terminator)
         except Exception as e:
             print e
             raise e
         finally:
-            ser.close()
+            pass
+#            self.ser.close()
 
 ### Basic send and receive methods ###
 
     def send(self,msg):
-        ser=serial.Serial(self.address, baudrate=self.baudrate)
+       #self.ser=serial.Serial(self.address, baudrate=self.baudrate)
+#        self.ser.open()
         time.sleep(.1)
         try:
-            ser.write(msg+self.terminator)
+            self.ser.write(msg+self.terminator)
         except Exception as e:
             print e
             raise e
         finally:
-            ser.close()
+            pass
+#            self.ser.close()
 
     def send_and_receive(self,msg):
-        ser=serial.Serial(self.address, baudrate=self.baudrate, timeout=2)
+        #self.ser=serial.Serial(self.address, baudrate=self.baudrate, timeout=2)
+#        self.ser.open()
         time.sleep(.1)
         # This delay is necessary... for some reason. The system behaves very poorly otherwise.
-        # Perhaps the serial port takes some time to initialize?
+        # Perhaps theself.serial port takes some time to initialize?
         try:
-            ser.write(msg+self.terminator)
-            return self.read_until_terminator(ser)
+            self.ser.write(msg+self.terminator)
+            return self.read_until_terminator()
         except Exception as e:
             print e
             raise e
         finally:
-            ser.close()
+            pass
+#            self.ser.close()
 
-    def read_until_terminator(self,ser):
+    def read_until_terminator(self):
         message=''
         new_char=None
         while new_char!='\r':
-            new_char=ser.read(1)
+            new_char= self.ser.read(1)
             if new_char=='':
-                # This means ser has timed out. We don't want an unending loop if the terminator has somehow been lost.
+                # This meansself.ser has timed out. We don't want an unending loop if the terminator has somehow been lost.
                 print 'Serial port timed out while reading.'
                 break
             message+=new_char

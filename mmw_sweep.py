@@ -17,8 +17,10 @@ import bisect
 import threading
 
 import sys
+import os
 
 import mmw_sweep_data
+import save_sweep
 
 import hittite_controller
 import lockin_controller
@@ -30,7 +32,8 @@ class SweepDialog(QDialog,Ui_SweepDialog):
         self.__app = qApp
         self.setupUi(self)
         
-        self.lockin = lockin_controller.lockinController(serial_port="COM6")
+        self.lockin = lockin_controller.lockinController(serial_port="/dev/ttyUSB2")
+        print self.lockin.get_idn()
         self.hittite = hittite_controller.hittiteController()
         self.dpi = 72
         self.fig = Figure((9.1, 5.2), dpi=self.dpi)
@@ -156,15 +159,17 @@ class SweepDialog(QDialog,Ui_SweepDialog):
         self.refresh_freq_table()
     @pyqtSlot()
     def onclick_save(self):
-        if self.logfile:
-            self.logfile.close()
-            self.logfile = None
-            self.push_save.setText("Start Logging")
-            self.line_filename.setText('')
-        else:
-            self.logfile = data_file.DataFile()  
-            self.line_filename.setText(self.logfile.filename)
-            self.push_save.setText("Close Log File")
+        if self.sweep_data is None:
+            print "no sweep to save"
+        comments, result = save_sweep.SaveSweepDialog.promptToSave(self)
+        if result:
+            filename = time.strftime("%Y-%m-%d_%H%M%S")
+            filename += ("_%.3f_%.3f_%.1f.npz" % (self.sweep_data.start/1e9,self.sweep_data.stop/1e9,self.sweep_data.step/1e6))
+            filename = os.path.join('/home/data2/mmw_sweeps',filename)
+            np.savez(filename, comments=comments, mmw_freq=self.sweep_data.mmw_freq,
+                     fundamental_freq = self.sweep_data.fundamental_freq, zbd_voltage=self.sweep_data.zbd_voltage,
+                     power_watts = self.sweep_data.power_watts)
+            self.line_filename.setText(filename)
     @pyqtSlot()
     def onclick_abort(self):
         self.abort_requested = True
@@ -232,7 +237,18 @@ class SweepDialog(QDialog,Ui_SweepDialog):
         self.sweep_data = mmw_sweep_data.MmwSweepData()
         start = self.spin_start_freq.value()*1e9/12.0
         stop = self.spin_stop_freq.value()*1e9/12.0
-        step = 10e6
+        step_text = str(self.combo_step_size.currentText())
+
+        try:
+            unit_index = step_text.find('MHz')
+            step = float(step_text[:unit_index])*1e6/12.0
+        except Exception,e:
+            print "Couldn't parse step:",e
+            step = 10e6
+
+        self.sweep_data.start = start*12.0
+        self.sweep_data.stop = stop*12.0
+        self.sweep_data.step = step*12.0
 #        step = 0.0625*2**self.combo_step_size.currentIndex()
         base_freqs = np.arange(start,stop+1e-3,step)
         print base_freqs
